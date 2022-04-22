@@ -3,6 +3,10 @@ const routes: Record<string, RouteType> = {
     path: '/',
     component: () => import('domains/Home'),
   },
+  search: {
+    path: '/search/*',
+    component: () => import('domains/Search'),
+  },
 }
 
 export default routes
