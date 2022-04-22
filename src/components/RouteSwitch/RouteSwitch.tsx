@@ -1,6 +1,6 @@
 import React, { ComponentType, FC, lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { CircularProgress } from '@mui/material'
+import Loading from 'components/Loading'
 
 export interface RouteSwitchProps {
   routes: Record<string, RouteType>
@@ -8,7 +8,7 @@ export interface RouteSwitchProps {
 
 const RouteSwitch: FC<RouteSwitchProps> = ({ routes, children }) => {
   return (
-    <Suspense fallback={<CircularProgress />}>
+    <Suspense fallback={<Loading />}>
       <Routes>
         {Object.keys(routes).map((key) => {
           const { path, component } = routes[key]
