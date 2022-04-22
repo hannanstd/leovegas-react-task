@@ -2,12 +2,14 @@ import React, { VFC } from 'react'
 import config from 'App.config'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import useStyles from './Footer.styles'
 
 export interface FooterProps {}
 
 const Footer: VFC<FooterProps> = () => {
+  const classes = useStyles()
   return (
-    <Box component="footer" sx={{ p: 1, mt: 'auto' }}>
+    <Box component="footer" className={classes.root}>
       <Typography variant="body2" color="text.secondary" align="center">
         {'Copyright © '}
         {config.APP_NAME}

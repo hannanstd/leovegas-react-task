@@ -6,7 +6,7 @@ export interface LoadingProps {}
 
 const Loading: VFC<LoadingProps> = () => {
   return (
-    <Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
+    <Stack direction="row" spacing={2} justifyContent="center">
       <CircularProgress />
     </Stack>
   )

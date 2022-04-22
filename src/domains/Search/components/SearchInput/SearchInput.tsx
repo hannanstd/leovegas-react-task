@@ -142,7 +142,7 @@ const SearchInput: VFC<SearchInputProps> = () => {
         disablePortal
         id="combo-box-demo"
         options={top100Films}
-        sx={{ width: 300 }}
+        style={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label="Movie" />}
       />
     </div>
