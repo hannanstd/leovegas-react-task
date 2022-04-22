@@ -2,10 +2,10 @@ import React, { VFC } from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material/styles'
 import { BrowserRouter as Router } from 'react-router-dom'
-import RouteSwitch from 'components/RouteSwitch'
+import RouteSwitch from 'views/components/RouteSwitch'
+import Layout from 'views/layout'
+import routes from 'views/routes'
 import theme from 'theme'
-import routes from 'routes'
-import Layout from 'Layout'
 
 const App: VFC = () => {
   return (

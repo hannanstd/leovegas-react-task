@@ -1,6 +1,6 @@
 import React, { ComponentType, FC, lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import Loading from 'components/Loading'
+import Loading from 'views/components/Loading'
 
 export interface RouteSwitchProps {
   routes: Record<string, RouteType>

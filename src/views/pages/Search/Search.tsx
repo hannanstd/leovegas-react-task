@@ -1,5 +1,5 @@
 import React, { VFC } from 'react'
-import { HeaderPortal } from 'Layout/components/Header'
+import { HeaderPortal } from 'views/layout/components/Header'
 import SearchInput from './components/SearchInput'
 import SearchResultTable from './components/SearchResultTable'
 import useStyles from './Search.styles'

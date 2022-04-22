@@ -1,11 +1,11 @@
 const routes: Record<string, RouteType> = {
   home: {
     path: '/',
-    component: () => import('domains/Home'),
+    component: () => import('views/pages/Home'),
   },
   search: {
     path: '/search/*',
-    component: () => import('domains/Search'),
+    component: () => import('views/pages/Search'),
   },
 }
 
