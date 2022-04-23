@@ -9,6 +9,16 @@ const queries: QueryRequests = {
         ?.map?.((item: any) => `https://www.youtube.com/watch?v=${item.key}`) ||
       [],
   }),
+  movieImages: (variables) => ({
+    endpoint: `movie/${variables.id}/images`,
+    resolver: (data) =>
+      (data?.posters || [])
+        .concat(data?.backdrops || [])
+        .map(
+          (item: any) =>
+            `https://image.tmdb.org/t/p/original/${item?.file_path}`
+        ),
+  }),
   movieDetails: (variables) => ({
     endpoint: `movie/${variables.id}`,
     resolver: (data) => ({

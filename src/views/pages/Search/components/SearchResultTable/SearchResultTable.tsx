@@ -8,7 +8,6 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-import Badge from '@mui/material/Badge'
 import Paper from '@mui/material/Paper'
 import TablePagination from '@mui/material/TablePagination'
 import Backdrop from '@mui/material/Backdrop'
@@ -17,22 +16,45 @@ import OndemandVideoIcon from '@mui/icons-material/OndemandVideo'
 import Loading from 'views/components/Loading'
 import IconButton from '@mui/material/IconButton/IconButton'
 import FloatingVideoPlayer from '../FloatingVideoPlayer'
+import ImageSlider from '../ImageSlider'
 
 export interface SearchResultTableProps {}
+
+enum DetailsEnum {
+  Details,
+  Images,
+  Videos,
+}
+
+type IdType = number | string
+type DetailsState = { type: DetailsEnum | null; id: IdType | null }
+
+const defaultDetailsState: DetailsState = { type: null, id: null }
+
 const SearchResultTable: VFC<SearchResultTableProps> = () => {
   const classes = useStyles()
-  const [page, setPage] = useState<number>(1)
-  const [videoMovieId, setVideoMovieId] = useState<number | string | null>(null)
-
   const [queryParams] = useSearchParams()
-  const searchValue: string = queryParams.get('search') || ''
+  const searchValue: string = queryParams.get('q') || ''
 
+  const [page, setPage] = useState<number>(1)
   useEffect(() => setPage(1), [searchValue])
+
+  const [detailsState, setDetailsState] = useState<DetailsState>({
+    ...defaultDetailsState,
+  })
 
   const { data, isLoading } = useQuery(['searchMovie', searchValue, page], {
     variables: { searchText: searchValue, page },
     options: { enabled: !!searchValue, keepPreviousData: true },
   })
+
+  const onVideoClick = (id: IdType): void => {
+    setDetailsState({ id, type: DetailsEnum.Videos })
+  }
+
+  const onPosterClick = (id: IdType): void => {
+    setDetailsState({ id, type: DetailsEnum.Images })
+  }
 
   return (
     <>
@@ -44,43 +66,39 @@ const SearchResultTable: VFC<SearchResultTableProps> = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell colSpan={2}>Title</TableCell>
+                <TableCell>Thumbnail</TableCell>
+                <TableCell>Title</TableCell>
                 <TableCell>Votes</TableCell>
                 <TableCell>Details</TableCell>
-                <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {!data?.items?.length && (
                 <TableRow>
-                  <TableCell colSpan={6}>No Item found</TableCell>
+                  <TableCell colSpan={4}>No Item found</TableCell>
                 </TableRow>
               )}
 
               {data?.items?.map?.((row) => (
                 <TableRow key={row.id}>
                   <TableCell width={100}>
-                    <Badge
-                      color="error"
-                      badgeContent={row.adult ? 'Adult' : null}
-                    >
-                      {!!row.thumbnail ? (
-                        <img
-                          width={100}
-                          src={row.thumbnail}
-                          alt={row.title}
-                          title={row.title}
-                        />
-                      ) : (
-                        <div style={{ display: 'block', width: 25 }} />
-                      )}
-                    </Badge>
+                    {!!row.thumbnail && (
+                      <img
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => onPosterClick(row.id)}
+                        width={100}
+                        src={row.thumbnail}
+                        alt={row.title}
+                      />
+                    )}
                   </TableCell>
+
                   <TableCell>
                     {row.title} {row.year ? ` (${row.year})` : ''}
                     <br />
                     {row.language}
                   </TableCell>
+
                   <TableCell>
                     <strong>{row.voteAverage}</strong>/10
                     <br />
@@ -89,22 +107,19 @@ const SearchResultTable: VFC<SearchResultTableProps> = () => {
                     <br />
                     Popularity: {row.popularity}
                   </TableCell>
+
                   <TableCell>
                     <ButtonGroup variant="text">
                       <IconButton
                         color="secondary"
                         size="medium"
-                        onClick={() =>
-                          setVideoMovieId((videoMovieId) =>
-                            videoMovieId === row.id ? null : row.id
-                          )
-                        }
+                        disabled={row.id === detailsState.id}
+                        onClick={() => onVideoClick(row.id)}
                       >
                         <OndemandVideoIcon />
                       </IconButton>
                     </ButtonGroup>
                   </TableCell>
-                  <TableCell></TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -121,10 +136,17 @@ const SearchResultTable: VFC<SearchResultTableProps> = () => {
           />
         )}
       </div>
-      {videoMovieId && (
+
+      {detailsState.type === DetailsEnum.Videos && !!detailsState.id && (
         <FloatingVideoPlayer
-          id={videoMovieId}
-          onClose={() => setVideoMovieId(null)}
+          id={detailsState.id}
+          onClose={() => setDetailsState({ ...defaultDetailsState })}
+        />
+      )}
+      {detailsState.type === DetailsEnum.Images && !!detailsState.id && (
+        <ImageSlider
+          id={detailsState.id}
+          onClose={() => setDetailsState({ ...defaultDetailsState })}
         />
       )}
     </>

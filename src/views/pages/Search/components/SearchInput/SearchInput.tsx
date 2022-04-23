@@ -12,12 +12,13 @@ import { useDebounce, useQuery } from 'hooks'
 import useStyles from './SearchInput.styles'
 
 export interface SearchInputProps {}
+const queryKey: string = 'q'
 
 const SearchInput: VFC<SearchInputProps> = () => {
   const classes = useStyles()
   const [queryParams, setQueryParams] = useSearchParams()
 
-  const queryValue: string = queryParams.get('search') as string
+  const queryValue: string = queryParams.get(queryKey) as string
   const [inputValue, setInputValue] = useState<string>(queryValue)
   const debouncedInputValue: string = useDebounce(inputValue, 500)
 
@@ -34,7 +35,7 @@ const SearchInput: VFC<SearchInputProps> = () => {
   )
 
   const setSearchQuery = (value: string = inputValue): void => {
-    setQueryParams({ search: value.trim() })
+    setQueryParams({ [queryKey]: value.trim() })
   }
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {

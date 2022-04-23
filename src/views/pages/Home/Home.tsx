@@ -25,7 +25,7 @@ const Home: VFC<HomeProps> = () => {
         Welcome, Click on the button below to start.
       </Typography>
       <div className={classes.buttonContainer}>
-        <Link to="/search">
+        <Link to="/search?q=matrix">
           <Button variant="contained">Search Movies</Button>
         </Link>
       </div>
