@@ -1,4 +1,4 @@
-import React, { VFC } from 'react'
+import React, { useEffect, useState, VFC } from 'react'
 import { useQuery } from 'hooks'
 import useStyles from './SearchResultTable.styles'
 import { useSearchParams } from 'react-router-dom'
@@ -10,21 +10,30 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Badge from '@mui/material/Badge'
 import Paper from '@mui/material/Paper'
+import TablePagination from '@mui/material/TablePagination'
+import Backdrop from '@mui/material/Backdrop'
+import Loading from 'views/components/Loading'
 
 export interface SearchResultTableProps {}
 const SearchResultTable: VFC<SearchResultTableProps> = () => {
   const classes = useStyles()
+  const [page, setPage] = useState<number>(1)
 
   const [queryParams] = useSearchParams()
   const searchValue: string = queryParams.get('search') || ''
 
-  const query = useQuery(['searchMovie', searchValue], {
-    variables: { searchText: searchValue },
-    options: { enabled: !!searchValue },
+  useEffect(() => setPage(1), [searchValue])
+
+  const { data, isLoading } = useQuery(['searchMovie', searchValue, page], {
+    variables: { searchText: searchValue, page },
+    options: { enabled: !!searchValue, keepPreviousData: true },
   })
 
   return (
     <div className={classes.root}>
+      <Backdrop open={isLoading}>
+        <Loading />
+      </Backdrop>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -35,7 +44,13 @@ const SearchResultTable: VFC<SearchResultTableProps> = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {query?.data?.items?.map?.((row) => (
+            {!data?.items?.length && (
+              <TableRow>
+                <TableCell colSpan={4}>No Item found</TableCell>
+              </TableRow>
+            )}
+
+            {data?.items?.map?.((row) => (
               <TableRow key={row.id}>
                 <TableCell width={50}>
                   <Badge
@@ -73,6 +88,16 @@ const SearchResultTable: VFC<SearchResultTableProps> = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      {!!data?.meta?.totalCount && (
+        <TablePagination
+          rowsPerPageOptions={[]}
+          component="div"
+          count={data?.meta?.totalCount || 0}
+          rowsPerPage={20}
+          page={page - 1}
+          onPageChange={(_, page) => setPage(page + 1)}
+        />
+      )}
     </div>
   )
 }
