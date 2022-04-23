@@ -20,6 +20,10 @@ export interface QuerySchemas {
       meta: { totalCount: number; page: number; totalPage: number }
     }
   }
+  movieVideos: {
+    input: { id: number | string }
+    output: string[]
+  }
   movieDetails: {
     input: { id: number | string }
     output: { id: number | string; title: string }

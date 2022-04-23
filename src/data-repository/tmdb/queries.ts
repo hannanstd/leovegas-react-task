@@ -1,6 +1,14 @@
 import { QueryRequests } from 'types/ApiTypes'
 
 const queries: QueryRequests = {
+  movieVideos: (variables) => ({
+    endpoint: `movie/${variables.id}/videos`,
+    resolver: (data) =>
+      data?.results
+        ?.filter?.((item: any) => item.key && item?.site === 'YouTube')
+        ?.map?.((item: any) => `https://www.youtube.com/watch?v=${item.key}`) ||
+      [],
+  }),
   movieDetails: (variables) => ({
     endpoint: `movie/${variables.id}`,
     resolver: (data) => ({
