@@ -8,7 +8,9 @@ import Layout from 'views/layout'
 import routes from 'views/routes'
 import theme from 'theme'
 
-const queryClient: QueryClient = new QueryClient()
+const queryClient: QueryClient = new QueryClient({
+  defaultOptions: { queries: { refetchOnWindowFocus: false } },
+})
 
 const App: VFC = () => {
   return (

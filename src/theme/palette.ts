@@ -1,14 +1,10 @@
-import { red } from '@mui/material/colors'
+import { PaletteMode } from '@mui/material'
 
-const palette = {
-  primary: {
-    main: '#556cd6',
-  },
-  secondary: {
-    main: '#19857b',
-  },
-  error: {
-    main: red.A400,
-  },
-}
+const darkPalette = {}
+const lightPalette = {}
+
+const palette = (mode: PaletteMode) => ({
+  mode: mode as PaletteMode,
+  ...(mode === 'dark' ? darkPalette : lightPalette),
+})
 export default palette
