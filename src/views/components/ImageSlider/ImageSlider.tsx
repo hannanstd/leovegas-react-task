@@ -50,7 +50,7 @@ const ImageSlider: VFC<ImageSliderProps> = ({
         )}
       </DialogContent>
 
-      {imageUrls?.length && (
+      {!!imageUrls?.length && (
         <DialogActions className={classes.footerRoot}>
           <Pagination
             size="small"

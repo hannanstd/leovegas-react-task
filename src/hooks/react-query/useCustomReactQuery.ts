@@ -14,8 +14,8 @@ import {
 
 const useQuery = <T extends QueryKeys>(
   key: T | [T, ...any[]],
-  { options: _options, variables, headers }: UseQueryArgs<T> = {} as any,
-  options?: UseQueryArgs<T>['options']
+  { options, variables, headers }: UseQueryArgs<T> = {} as any,
+  _options?: UseQueryArgs<T>['options']
 ) => {
   if (!Array.isArray(key)) key = [key, variables]
   return useReactQuery<unknown, unknown, QuerySchemas[T]['output']>(
@@ -29,14 +29,14 @@ const useQuery = <T extends QueryKeys>(
         })
       )
     },
-    { ...(_options || {}), ...(options || {}) } as any
+    { ...(options || {}), ...(_options || {}) } as any
   )
 }
 
 const useMutation = <T extends MutationKeys>(
   key: T,
-  { options: _options, headers }: UseMutationArgs<T> = {} as any,
-  options?: UseMutationArgs<T>['options']
+  { options, headers }: UseMutationArgs<T> = {} as any,
+  _options?: UseMutationArgs<T>['options']
 ) => {
   return useReactMutation<
     MutationSchemas[T]['output'],
@@ -53,7 +53,7 @@ const useMutation = <T extends MutationKeys>(
         })
       )
     },
-    { ...(_options || {}), ...(options || {}) } as any
+    { ...(options || {}), ...(_options || {}) } as any
   )
 }
 

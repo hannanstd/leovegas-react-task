@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import RouteSwitch from 'views/components/RouteSwitch'
+import ToastContainer from 'views/components/Toast'
 import Layout from 'views/layout'
 import routes from 'views/routes'
 import theme from 'theme'
@@ -22,6 +23,7 @@ const App: VFC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <ToastContainer />
       <Router>
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={false} />

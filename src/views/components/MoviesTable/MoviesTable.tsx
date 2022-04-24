@@ -6,18 +6,23 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import TableBody from '@mui/material/TableBody'
-import ButtonGroup from '@mui/material/ButtonGroup'
 import IconButton from '@mui/material/IconButton/IconButton'
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo'
+import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded'
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'
 import TablePagination from '@mui/material/TablePagination'
-import { QuerySchemas } from 'schema/query.schema'
+import { MovieIdType, MovieObjectType } from './MoviesTable.types'
+import MovieChannels, {
+  useMovieChannelsHelpers,
+} from './components/MovieChannels'
 import MovieMedia, {
-  MovieMediaProps,
   MovieMediaEnum,
+  MovieMediaProps,
 } from './components/MovieMedia'
+import Checkbox from '@mui/material/Checkbox/Checkbox'
 
 export interface MoviesTableProps {
-  rows: QuerySchemas['searchMovie']['output']['items']
+  rows: Array<MovieObjectType>
   page?: number
   perPage?: number
   onPageChange?: (page: number) => void
@@ -31,16 +36,24 @@ const MoviesTable: VFC<MoviesTableProps> = ({
   onPageChange,
   totalCount,
 }) => {
+  const [channelMovieObject, setChannelMovieObject] =
+    useState<MovieObjectType | null>(null)
   const [mediaState, setMediaState] =
-    useState<Pick<MovieMediaProps, 'id' | 'type'>>()
+    useState<Pick<MovieMediaProps, 'movieId' | 'type'>>()
 
-  const onVideoClick = (id: string | number): void => {
-    setMediaState({ type: MovieMediaEnum.Video, id })
+  const { getMovieChannels } = useMovieChannelsHelpers()
+
+  const onChannelClick = (movieObject: MovieObjectType) => {
+    setChannelMovieObject(
+      movieObject.id === channelMovieObject?.id ? null : movieObject
+    )
   }
 
-  const onThumbnailClick = (id: string | number): void => {
-    setMediaState({ type: MovieMediaEnum.Image, id })
-  }
+  const onVideoClick = (movieId: MovieIdType): void =>
+    setMediaState({ type: MovieMediaEnum.Video, movieId })
+
+  const onThumbnailClick = (movieId: MovieIdType): void =>
+    setMediaState({ type: MovieMediaEnum.Image, movieId })
 
   return (
     <>
@@ -52,13 +65,14 @@ const MoviesTable: VFC<MoviesTableProps> = ({
               <TableCell>Title</TableCell>
               <TableCell>Votes</TableCell>
               <TableCell>Videos</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
             {!rows?.length && (
               <TableRow>
-                <TableCell colSpan={4}>No Item found</TableCell>
+                <TableCell colSpan={5}>No Item found</TableCell>
               </TableRow>
             )}
 
@@ -92,16 +106,26 @@ const MoviesTable: VFC<MoviesTableProps> = ({
                 </TableCell>
 
                 <TableCell>
-                  <ButtonGroup variant="text">
-                    <IconButton
-                      color="secondary"
-                      size="medium"
-                      disabled={row.id === mediaState?.id}
-                      onClick={() => onVideoClick(row.id)}
-                    >
-                      <OndemandVideoIcon />
-                    </IconButton>
-                  </ButtonGroup>
+                  <IconButton
+                    color="secondary"
+                    size="medium"
+                    disabled={row.id === mediaState?.movieId}
+                    onClick={() => onVideoClick(row.id)}
+                  >
+                    <OndemandVideoIcon />
+                  </IconButton>
+                </TableCell>
+
+                <TableCell>
+                  {channelMovieObject?.id === row.id ? null : (
+                    <Checkbox
+                      title="Add Movie to your list"
+                      checked={!!(getMovieChannels(row.id)?.length ?? 0)}
+                      onChange={() => onChannelClick(row)}
+                      icon={<BookmarkBorderIcon />}
+                      checkedIcon={<BookmarkAddedIcon color="success" />}
+                    />
+                  )}
                 </TableCell>
               </TableRow>
             ))}
@@ -122,9 +146,16 @@ const MoviesTable: VFC<MoviesTableProps> = ({
 
       <MovieMedia
         type={mediaState?.type}
-        id={mediaState?.id}
+        movieId={mediaState?.movieId}
         onClose={() => setMediaState(undefined)}
       />
+
+      {!!channelMovieObject && (
+        <MovieChannels
+          movieObject={channelMovieObject}
+          onClose={() => setChannelMovieObject(null)}
+        />
+      )}
     </>
   )
 }
