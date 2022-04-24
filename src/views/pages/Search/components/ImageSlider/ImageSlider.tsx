@@ -20,7 +20,7 @@ const ImageSlider: VFC<ImageSliderProps> = ({ id, onClose }) => {
   const classes = useStyles()
   const [index, setIndex] = useState<number>(0)
 
-  const { data: urls, isLoading } = useQuery(['movieImages', id], {
+  const { data: urls, isLoading } = useQuery('movieImages', {
     variables: { id },
   })
 

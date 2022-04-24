@@ -22,7 +22,7 @@ const FloatingVideoPlayer: VFC<FloatingVideoPlayerProps> = ({
   const [fullScreen, setFullScreen] = useState<boolean>(false)
   const classes = useStyles({ fullScreen })()
 
-  const { data: urls, isLoading } = useQuery(['movieVideos', id], {
+  const { data: urls, isLoading } = useQuery('movieVideos', {
     variables: { id },
   })
 

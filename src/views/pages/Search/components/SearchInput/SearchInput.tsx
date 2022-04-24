@@ -18,7 +18,7 @@ const SearchInput: VFC<SearchInputProps> = () => {
   const classes = useStyles()
   const [queryParams, setQueryParams] = useSearchParams()
 
-  const queryValue: string = queryParams.get(queryKey) as string
+  const queryValue: string = queryParams.get(queryKey) || ''
   const [inputValue, setInputValue] = useState<string>(queryValue)
   const debouncedInputValue: string = useDebounce(inputValue, 500)
 
@@ -26,13 +26,10 @@ const SearchInput: VFC<SearchInputProps> = () => {
 
   useEffect(() => setInputValue(queryValue), [queryValue])
 
-  const { isLoading, data } = useQuery(
-    ['searchMovie', debouncedInputValue, 1],
-    {
-      variables: { searchText: debouncedInputValue, page: 1 },
-      options: { enabled: !!debouncedInputValue },
-    }
-  )
+  const { isLoading, data } = useQuery('searchMovie', {
+    variables: { searchText: debouncedInputValue, page: 1 },
+    options: { enabled: !!debouncedInputValue },
+  })
 
   const setSearchQuery = (value: string = inputValue): void => {
     setQueryParams({ [queryKey]: value.trim() })

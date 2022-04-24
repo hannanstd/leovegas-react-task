@@ -43,7 +43,7 @@ const SearchResultTable: VFC<SearchResultTableProps> = () => {
     ...defaultDetailsState,
   })
 
-  const { data, isLoading } = useQuery(['searchMovie', searchValue, page], {
+  const { data, isLoading } = useQuery('searchMovie', {
     variables: { searchText: searchValue, page },
     options: { enabled: !!searchValue, keepPreviousData: true },
   })

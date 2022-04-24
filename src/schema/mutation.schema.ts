@@ -1,6 +1,6 @@
 export interface MutationSchemas {
-  makeList: {
+  /*makeList: {
     input: { name: string }
     output: { status: boolean }
-  }
+  }*/
 }

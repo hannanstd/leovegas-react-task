@@ -17,11 +17,11 @@ const useQuery = <T extends QueryKeys>(
   { options: _options, variables, headers }: UseQueryArgs<T> = {} as any,
   options?: UseQueryArgs<T>['options']
 ) => {
+  if (!Array.isArray(key)) key = [key, variables]
   return useReactQuery<unknown, unknown, QuerySchemas[T]['output']>(
     key,
     async () => {
-      if (Array.isArray(key)) key = key[0]
-      const { resolver, ...args } = queries?.[key](variables as any)
+      const { resolver, ...args } = queries?.[key[0] as T](variables as any)
       return resolver(
         await request({
           ...args,
