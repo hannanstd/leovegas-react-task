@@ -3,14 +3,10 @@ import { Theme } from '@mui/material'
 
 const useStyles = makeStyles(
   ({ palette }: Theme) => ({
-    root: {},
-    searchInputContainer: {
+    root: {
       width: '100%',
-      display: 'flex',
-      justifyContent: 'center',
     },
-    resultContainer: {},
   }),
-  { name: 'Search' }
+  { name: 'SearchResults' }
 )
 export default useStyles

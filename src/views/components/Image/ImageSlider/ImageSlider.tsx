@@ -3,7 +3,6 @@ import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
-import { useQuery } from 'hooks'
 import Loading from 'views/components/Loading'
 import Pagination from '@mui/material/Pagination/Pagination'
 import PaginationItem from '@mui/material/PaginationItem'
@@ -12,23 +11,25 @@ import IconButton from '@mui/material/IconButton/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 
 export interface ImageSliderProps {
-  id: string | number
+  imageUrls: string[]
+  show: boolean
   onClose: () => void
+  isLoading: boolean
 }
 
-const ImageSlider: VFC<ImageSliderProps> = ({ id, onClose }) => {
+const ImageSlider: VFC<ImageSliderProps> = ({
+  imageUrls,
+  show = false,
+  onClose,
+  isLoading = false,
+}) => {
   const classes = useStyles()
   const [index, setIndex] = useState<number>(0)
-
-  const { data: urls, isLoading } = useQuery('movieImages', {
-    variables: { id },
-  })
-
-  useEffect(() => setIndex(0), [urls])
+  useEffect(() => setIndex(0), [imageUrls])
 
   return (
     <Dialog
-      open={true}
+      open={show}
       fullScreen
       onClose={() => onClose?.()}
       classes={{ root: classes.root, paper: classes.paperRoot }}
@@ -42,18 +43,18 @@ const ImageSlider: VFC<ImageSliderProps> = ({ id, onClose }) => {
       <DialogContent dividers className={classes.bodyRoot}>
         {isLoading ? (
           <Loading />
-        ) : !urls?.length ? (
+        ) : !imageUrls?.length ? (
           <div>No Images found</div>
         ) : (
-          <img src={urls?.[index]} alt="" />
+          <img src={imageUrls?.[index]} alt="" />
         )}
       </DialogContent>
 
-      {urls?.length && (
+      {imageUrls?.length && (
         <DialogActions className={classes.footerRoot}>
           <Pagination
             size="small"
-            count={urls?.length || 0}
+            count={imageUrls?.length || 0}
             page={index + 1}
             onChange={(_, index) => setIndex(index - 1)}
             renderItem={({ ...item }: any) => (
@@ -61,7 +62,7 @@ const ImageSlider: VFC<ImageSliderProps> = ({ id, onClose }) => {
                 <PaginationItem {...item} />
                 {item.type === 'page' && (
                   <img
-                    src={urls[item?.page - 1]}
+                    src={imageUrls[item?.page - 1]}
                     {...item}
                     alt=""
                     title={item?.['aria-label']}

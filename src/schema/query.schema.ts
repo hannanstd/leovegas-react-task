@@ -28,7 +28,7 @@ export interface QuerySchemas {
     input: { id: number | string }
     output: string[]
   }
-  movieDetails: {
+  MovieMedia: {
     input: { id: number | string }
     output: { id: number | string; title: string }
   }

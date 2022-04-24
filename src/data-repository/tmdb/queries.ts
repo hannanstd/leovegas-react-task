@@ -1,31 +1,6 @@
 import { QueryRequests } from 'types/ApiTypes'
 
 const queries: QueryRequests = {
-  movieVideos: (variables) => ({
-    endpoint: `movie/${variables.id}/videos`,
-    resolver: (data) =>
-      data?.results
-        ?.filter?.((item: any) => item.key && item?.site === 'YouTube')
-        ?.map?.((item: any) => `https://www.youtube.com/watch?v=${item.key}`) ||
-      [],
-  }),
-  movieImages: (variables) => ({
-    endpoint: `movie/${variables.id}/images`,
-    resolver: (data) =>
-      (data?.posters || [])
-        .concat(data?.backdrops || [])
-        .map(
-          (item: any) =>
-            `https://image.tmdb.org/t/p/original/${item?.file_path}`
-        ),
-  }),
-  movieDetails: (variables) => ({
-    endpoint: `movie/${variables.id}`,
-    resolver: (data) => ({
-      id: data.id,
-      title: data.title,
-    }),
-  }),
   searchMovie: (variables) => ({
     endpoint: `search/movie`,
     queryParams: {
@@ -55,6 +30,31 @@ const queries: QueryRequests = {
         page: data?.page,
         totalPage: data?.total_pages,
       },
+    }),
+  }),
+  movieVideos: (variables) => ({
+    endpoint: `movie/${variables.id}/videos`,
+    resolver: (data) =>
+      data?.results
+        ?.filter?.((item: any) => item.key && item?.site === 'YouTube')
+        ?.map?.((item: any) => `https://www.youtube.com/watch?v=${item.key}`) ||
+      [],
+  }),
+  movieImages: (variables) => ({
+    endpoint: `movie/${variables.id}/images`,
+    resolver: (data) =>
+      (data?.posters || [])
+        .concat(data?.backdrops || [])
+        .map(
+          (item: any) =>
+            `https://image.tmdb.org/t/p/original/${item?.file_path}`
+        ),
+  }),
+  MovieMedia: (variables) => ({
+    endpoint: `movie/${variables.id}`,
+    resolver: (data) => ({
+      id: data.id,
+      title: data.title,
     }),
   }),
 }

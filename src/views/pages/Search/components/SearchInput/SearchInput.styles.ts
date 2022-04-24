@@ -5,6 +5,11 @@ const useStyles = makeStyles(
   ({ palette: { common }, spacing }: Theme) => ({
     root: {
       width: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+    },
+    formRoot: {
+      width: '100%',
       maxWidth: 500,
     },
     autoCompleteRoot: {
@@ -22,15 +27,6 @@ const useStyles = makeStyles(
     },
     input: {
       color: `${common.black} !important`,
-    },
-    viewAll: {
-      width: '100%',
-      cursor: 'pointer',
-      padding: spacing(2, 3),
-    },
-    thumbnail: {
-      width: 50,
-      marginRight: 15,
     },
   }),
   { name: 'SearchInput' }

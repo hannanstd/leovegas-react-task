@@ -1,23 +1,17 @@
 import React, { VFC } from 'react'
-import { HeaderPortal } from 'views/layout/components/Header'
+import { HeaderPortalConsumer } from 'views/layout/components/Header'
 import SearchInput from './components/SearchInput'
-import SearchResultTable from './components/SearchResultTable'
-import useStyles from './Search.styles'
+import SearchResults from './components/SearchResults'
 
 export interface SearchProps {}
 
 const Search: VFC<SearchProps> = () => {
-  const classes = useStyles()
   return (
-    <div className={classes.root}>
-      <HeaderPortal>
-        <div className={classes.searchInputContainer}>
-          <SearchInput />
-        </div>
-      </HeaderPortal>
-      <div className={classes.resultContainer}>
-        <SearchResultTable />
-      </div>
+    <div>
+      <HeaderPortalConsumer>
+        <SearchInput />
+      </HeaderPortalConsumer>
+      <SearchResults />
     </div>
   )
 }
