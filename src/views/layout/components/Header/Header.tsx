@@ -6,8 +6,7 @@ import Typography from '@mui/material/Typography'
 import { HeaderPortalContainer } from './HeaderPortal'
 import useStyles from './Header.styles'
 
-export interface HeaderProps {}
-const Header: VFC<HeaderProps> = () => {
+const Header: VFC = () => {
   const classes = useStyles()
   return (
     <AppBar position="relative" className={classes.root}>

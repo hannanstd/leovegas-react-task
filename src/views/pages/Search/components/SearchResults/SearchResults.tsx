@@ -6,9 +6,7 @@ import MoviesTable from 'views/components/MoviesTable'
 import useStyles from './SearchResults.styles'
 import useSearchedValue from '../../hooks'
 
-export interface SearchResultsProps {}
-
-const SearchResults: VFC<SearchResultsProps> = () => {
+const SearchResults: VFC = () => {
   const classes = useStyles()
   const [searchText] = useSearchedValue()
 

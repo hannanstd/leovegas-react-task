@@ -3,9 +3,7 @@ import { HeaderPortalConsumer } from 'views/layout/components/Header'
 import SearchInput from './components/SearchInput'
 import SearchResults from './components/SearchResults'
 
-export interface SearchProps {}
-
-const Search: VFC<SearchProps> = () => {
+const Search: VFC = () => {
   return (
     <div>
       <HeaderPortalConsumer>

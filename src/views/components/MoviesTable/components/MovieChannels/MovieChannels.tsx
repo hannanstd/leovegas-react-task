@@ -4,8 +4,10 @@ import FormGroup from '@mui/material/FormGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import Button from '@mui/material/Button'
+import ButtonGroup from '@mui/material/ButtonGroup'
 import DeleteIcon from '@mui/icons-material/Delete'
 import IconButton from '@mui/material/IconButton/IconButton'
+import RenameIcon from '@mui/icons-material/DriveFileRenameOutline'
 import TextField from '@mui/material/TextField'
 import AddIcon from '@mui/icons-material/Add'
 import { toast } from 'views/components/Toast'
@@ -23,52 +25,36 @@ const MovieChannels: VFC<MovieChannelsProps> = ({ movieObject, onClose }) => {
   const movieId: MovieIdType = movieObject?.id
   const movieTitle: string = movieObject?.title
 
-  const {
-    getAllChannels,
-    removeChannel,
-    isMovieInChannel,
-    addMovieToChannels,
-    removeMovieFromChannels,
-    getChannelMovies,
-  } = useMovieChannelsHelpers()
-
   const [newChannelName, setNewChannelName] = useState<string>('')
-  const channelNames: Array<string> = getAllChannels()
+
+  const methods = useMovieChannelsHelpers()
+  const channelNames: Array<string> = methods.getAllChannels()
 
   const onCheckboxChange = (checked: boolean, channelName: string) => {
     const toastIdx = `movie-channels-checkbox-change-${channelName}`
     if (checked) {
-      addMovieToChannels(movieObject, [channelName])
-      toast({
-        idx: toastIdx,
-        type: 'success',
-        message: `"${movieTitle}" added to "${channelName}"`,
-      })
+      methods.addMovieToChannels(movieObject, [channelName])
+      const message: string = `"${movieTitle}" added to "${channelName}"`
+      toast({ idx: toastIdx, type: 'success', message })
     } else {
-      removeMovieFromChannels(movieId, [channelName])
-      toast({
-        idx: toastIdx,
-        type: 'warning',
-        message: `"${movieTitle}" removed from "${channelName}"`,
-      })
+      methods.removeMovieFromChannels(movieId, [channelName])
+      const message: string = `"${movieTitle}" removed from "${channelName}"`
+      toast({ idx: toastIdx, type: 'warning', message })
     }
   }
 
   const onAddNewChannel = (): void => {
-    addMovieToChannels(movieObject, [newChannelName])
+    methods.addMovieToChannels(movieObject, [newChannelName])
     setNewChannelName('')
-    toast({
-      type: 'success',
-      message: `Channel "${newChannelName}" created and "${movieTitle}" added to channel`,
-    })
+    toast({ type: 'success', message: `Channel "${newChannelName}" created` })
+    toast({ type: 'success', message: `"${movieTitle}" added to channel` })
   }
 
   const onRemoveChannel = (channelName: string): void => {
-    removeChannel(channelName)
-    toast({
-      type: 'warning',
-      message: `Channel "${channelName}" removed`,
-    })
+    //if (window.confirm('Are you sure you want to remove this channel?')) {
+    methods.removeChannel(channelName)
+    toast({ type: 'warning', message: `Channel "${channelName}" removed` })
+    //}
   }
 
   return (
@@ -82,30 +68,42 @@ const MovieChannels: VFC<MovieChannelsProps> = ({ movieObject, onClose }) => {
                   <>
                     {channelName}
                     <span className={classes.movieCount}>
-                      (has {getChannelMovies(channelName).length} Movies)
+                      (has {methods.getChannelMovies(channelName).length}{' '}
+                      Movies)
                     </span>
                   </>
                 }
                 control={
                   <Checkbox
                     value={channelName}
-                    checked={isMovieInChannel(movieId, channelName)}
-                    onChange={(e) =>
-                      onCheckboxChange(e.target.checked, channelName)
+                    checked={methods.isMovieInChannel(movieId, channelName)}
+                    onChange={(e, checked) =>
+                      onCheckboxChange(checked, channelName)
                     }
                   />
                 }
               />
-              <IconButton
-                color="secondary"
-                size="small"
-                title="Delete Channel"
-                onClick={() => onRemoveChannel(channelName)}
-              >
-                <DeleteIcon fontSize="small" />
-              </IconButton>
+              <ButtonGroup variant="text">
+                <IconButton
+                  color="secondary"
+                  size="small"
+                  title="Rename Channel"
+                  //onClick={() => onRemoveChannel(channelName)}
+                >
+                  <RenameIcon fontSize="inherit" />
+                </IconButton>
+                <IconButton
+                  color="secondary"
+                  size="small"
+                  title="Delete Channel"
+                  onClick={() => onRemoveChannel(channelName)}
+                >
+                  <DeleteIcon fontSize="inherit" />
+                </IconButton>
+              </ButtonGroup>
             </div>
           ))}
+
           <div className={`${classes.channelItem} ${classes.addNewChannel}`}>
             <TextField
               size="small"

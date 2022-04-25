@@ -1,4 +1,4 @@
-import React, { useState, VFC } from 'react'
+import React, { Fragment, useState, VFC } from 'react'
 import TableContainer from '@mui/material/TableContainer'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
@@ -6,12 +6,10 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import TableBody from '@mui/material/TableBody'
-import IconButton from '@mui/material/IconButton/IconButton'
-import OndemandVideoIcon from '@mui/icons-material/OndemandVideo'
-import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded'
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'
 import TablePagination from '@mui/material/TablePagination'
+import Transition from '@mui/material/Fade'
 import { MovieIdType, MovieObjectType } from './MoviesTable.types'
+import useStyles from './MoviesTable.styles'
 import MovieChannels, {
   useMovieChannelsHelpers,
 } from './components/MovieChannels'
@@ -19,7 +17,12 @@ import MovieMedia, {
   MovieMediaEnum,
   MovieMediaProps,
 } from './components/MovieMedia'
-import Checkbox from '@mui/material/Checkbox/Checkbox'
+import ActionCell from './components/TableCells/ActionCell'
+import DescriptionCell from './components/TableCells/DescriptionCell'
+import ThumbnailCell from './components/TableCells/ThumbnailCell'
+import TitleCell from './components/TableCells/TitleCell'
+import VideoCell from './components/TableCells/VideoCell'
+import VoteCell from './components/TableCells/VoteCell'
 
 export interface MoviesTableProps {
   rows: Array<MovieObjectType>
@@ -29,6 +32,8 @@ export interface MoviesTableProps {
   totalCount?: number
 }
 
+type MediaState = Pick<MovieMediaProps, 'movieId' | 'type'>
+
 const MoviesTable: VFC<MoviesTableProps> = ({
   rows,
   page,
@@ -36,10 +41,12 @@ const MoviesTable: VFC<MoviesTableProps> = ({
   onPageChange,
   totalCount,
 }) => {
+  const classes = useStyles()
+
+  const [mediaState, setMediaState] = useState<MediaState>()
+  const [collapsedIds, setCollapsedIds] = useState<MovieIdType[]>([])
   const [channelMovieObject, setChannelMovieObject] =
     useState<MovieObjectType | null>(null)
-  const [mediaState, setMediaState] =
-    useState<Pick<MovieMediaProps, 'movieId' | 'type'>>()
 
   const { getMovieChannels } = useMovieChannelsHelpers()
 
@@ -55,17 +62,25 @@ const MoviesTable: VFC<MoviesTableProps> = ({
   const onThumbnailClick = (movieId: MovieIdType): void =>
     setMediaState({ type: MovieMediaEnum.Image, movieId })
 
+  const onCollapseChange = (movieId: MovieIdType, isCollapsed: boolean) => {
+    if (isCollapsed) {
+      setCollapsedIds([...collapsedIds, movieId])
+    } else {
+      setCollapsedIds(collapsedIds.filter((id) => id !== movieId))
+    }
+  }
+
   return (
     <>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Images</TableCell>
+              <TableCell align="center">Images</TableCell>
               <TableCell>Title</TableCell>
               <TableCell>Votes</TableCell>
               <TableCell>Videos</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
 
@@ -76,59 +91,55 @@ const MoviesTable: VFC<MoviesTableProps> = ({
               </TableRow>
             )}
 
-            {rows?.map?.((row) => (
-              <TableRow key={row.id}>
-                <TableCell width={100}>
-                  {!!row.thumbnail && (
-                    <img
-                      style={{ cursor: 'pointer' }}
-                      onClick={() => onThumbnailClick(row.id)}
-                      width={100}
-                      src={row.thumbnail}
-                      alt={row.title}
-                    />
-                  )}
-                </TableCell>
+            {rows?.map?.((row) => {
+              const isCollapsed: boolean = collapsedIds.includes(row.id)
+              return (
+                <Fragment key={row.id}>
+                  <TableRow className={classes.tableRow}>
+                    <TableCell align="center" className={classes.thumbnailCell}>
+                      <ThumbnailCell row={row} onClick={onThumbnailClick} />
+                    </TableCell>
 
-                <TableCell>
-                  {row.title} {row.year ? ` (${row.year})` : ''}
-                  <br />
-                  {row.language}
-                </TableCell>
+                    <TableCell>
+                      <TitleCell row={row} />
+                    </TableCell>
 
-                <TableCell>
-                  <strong>{row.voteAverage}</strong>/10
-                  <br />
-                  from {row.voteCount} votes
-                  <br />
-                  <br />
-                  Popularity: {row.popularity}
-                </TableCell>
+                    <TableCell>
+                      <VoteCell row={row} />
+                    </TableCell>
 
-                <TableCell>
-                  <IconButton
-                    color="secondary"
-                    size="medium"
-                    disabled={row.id === mediaState?.movieId}
-                    onClick={() => onVideoClick(row.id)}
-                  >
-                    <OndemandVideoIcon />
-                  </IconButton>
-                </TableCell>
+                    <TableCell>
+                      <VideoCell
+                        row={row}
+                        onClick={onVideoClick}
+                        disabled={row.id === mediaState?.movieId}
+                      />
+                    </TableCell>
 
-                <TableCell>
-                  {channelMovieObject?.id === row.id ? null : (
-                    <Checkbox
-                      title="Add Movie to your list"
-                      checked={!!(getMovieChannels(row.id)?.length ?? 0)}
-                      onChange={() => onChannelClick(row)}
-                      icon={<BookmarkBorderIcon />}
-                      checkedIcon={<BookmarkAddedIcon color="success" />}
-                    />
-                  )}
-                </TableCell>
-              </TableRow>
-            ))}
+                    <TableCell align="center">
+                      <ActionCell
+                        row={row}
+                        isCollapsed={isCollapsed}
+                        onCollapseChange={onCollapseChange}
+                        onChannelClick={onChannelClick}
+                        isInChannel={!!(getMovieChannels(row.id)?.length ?? 0)}
+                        isEditChannel={channelMovieObject?.id === row.id}
+                      />
+                    </TableCell>
+                  </TableRow>
+
+                  <TableRow>
+                    <TableCell className={classes.hiddenCell} colSpan={5}>
+                      <Transition in={isCollapsed} unmountOnExit>
+                        <div>
+                          <DescriptionCell row={row} />
+                        </div>
+                      </Transition>
+                    </TableCell>
+                  </TableRow>
+                </Fragment>
+              )
+            })}
           </TableBody>
         </Table>
       </TableContainer>

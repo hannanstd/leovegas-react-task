@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { createRef, useImperativeHandle, useState, VFC } from 'react'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
@@ -10,13 +11,12 @@ type ToastState = {
   duration?: number
   type: AlertColor
 }
-
 export type ToastParams = ToastState
 
-const ref = createRef<any>()
-export const toast = (props: ToastParams) => ref.current.open(props)
-
 let timeouts: Record<string, number> = {}
+const ref = createRef<any>()
+
+export const toast = (props: ToastParams) => ref.current.open(props)
 
 const ToastContainer: VFC = () => {
   const [alerts, setAlerts] = useState<ToastState[]>([])

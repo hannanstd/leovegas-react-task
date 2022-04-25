@@ -6,9 +6,7 @@ import Container from '@mui/material/Container'
 import { Link } from 'react-router-dom'
 import useStyles from './Home.styles'
 
-export interface HomeProps {}
-
-const Home: VFC<HomeProps> = () => {
+const Home: VFC = () => {
   const classes = useStyles()
   return (
     <Container maxWidth="sm">
