@@ -10,9 +10,10 @@ import TablePagination from '@mui/material/TablePagination'
 import Transition from '@mui/material/Fade'
 import { MovieIdType, MovieObjectType } from './MoviesTable.types'
 import useStyles from './MoviesTable.styles'
-import MovieChannels, {
+import {
+  MovieChannelsModal,
   useMovieChannelsHelpers,
-} from './components/MovieChannels'
+} from 'views/components/MovieChannels'
 import MovieMedia, {
   MovieMediaEnum,
   MovieMediaProps,
@@ -162,7 +163,7 @@ const MoviesTable: VFC<MoviesTableProps> = ({
       />
 
       {!!channelMovieObject && (
-        <MovieChannels
+        <MovieChannelsModal
           movieObject={channelMovieObject}
           onClose={() => setChannelMovieObject(null)}
         />

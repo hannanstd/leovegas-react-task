@@ -1,6 +1,6 @@
 import { usePersistSharedState } from 'hooks'
 import config from 'App.config'
-import { MovieIdType, MovieObjectType } from '../../../MoviesTable.types'
+import { MovieIdType, MovieObjectType } from 'views/components/MoviesTable'
 
 export enum StorageKey {
   MoviesObject = '__movies',
@@ -118,7 +118,7 @@ const useMovieChannelsHelpers = () => {
       (movieIdsByChannelName?.[channelName] || [])
         .map((movieId: MovieIdType) => moviesObject?.[movieId])
         .filter(Boolean) || []
-    )
+    ).reverse()
   }
 
   const isMovieInAnyChannel = (movieId: MovieIdType): boolean => {

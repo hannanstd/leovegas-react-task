@@ -11,16 +11,19 @@ import RenameIcon from '@mui/icons-material/DriveFileRenameOutline'
 import TextField from '@mui/material/TextField'
 import AddIcon from '@mui/icons-material/Add'
 import { toast } from 'views/components/Toast'
-import useStyles from './MovieChannels.styles'
-import { useMovieChannelsHelpers } from './hooks'
-import { MovieIdType, MovieObjectType } from '../../MoviesTable.types'
+import { MovieIdType, MovieObjectType } from 'views/components/MoviesTable'
+import useStyles from './MovieChannelsModal.styles'
+import { useMovieChannelsHelpers } from '../hooks'
 
 export interface MovieChannelsProps {
   movieObject: MovieObjectType
   onClose: () => void
 }
 
-const MovieChannels: VFC<MovieChannelsProps> = ({ movieObject, onClose }) => {
+const MovieChannelsModal: VFC<MovieChannelsProps> = ({
+  movieObject,
+  onClose,
+}) => {
   const classes = useStyles()
   const movieId: MovieIdType = movieObject?.id
   const movieTitle: string = movieObject?.title
@@ -31,7 +34,7 @@ const MovieChannels: VFC<MovieChannelsProps> = ({ movieObject, onClose }) => {
   const channelNames: Array<string> = methods.getAllChannels()
 
   const onCheckboxChange = (checked: boolean, channelName: string) => {
-    const toastIdx = `movie-channels-checkbox-change-${channelName}`
+    const toastIdx = `movie-channels-checkbox-change-${channelName}-${movieId}`
     if (checked) {
       methods.addMovieToChannels(movieObject, [channelName])
       const message: string = `"${movieTitle}" added to "${channelName}"`
@@ -46,8 +49,10 @@ const MovieChannels: VFC<MovieChannelsProps> = ({ movieObject, onClose }) => {
   const onAddNewChannel = (): void => {
     methods.addMovieToChannels(movieObject, [newChannelName])
     setNewChannelName('')
-    toast({ type: 'success', message: `Channel "${newChannelName}" created` })
-    toast({ type: 'success', message: `"${movieTitle}" added to channel` })
+    toast({
+      type: 'success',
+      message: `"${movieTitle}" added to "${newChannelName}"`,
+    })
   }
 
   const onRemoveChannel = (channelName: string): void => {
@@ -133,4 +138,4 @@ const MovieChannels: VFC<MovieChannelsProps> = ({ movieObject, onClose }) => {
   )
 }
 
-export default MovieChannels
+export default MovieChannelsModal

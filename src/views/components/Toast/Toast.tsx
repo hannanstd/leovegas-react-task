@@ -4,35 +4,35 @@ import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import { AlertColor } from '@mui/material/Alert/Alert'
 import Transition from '@mui/material/Fade'
+import { SnackbarOrigin } from '@mui/material/Snackbar/Snackbar'
 
-type ToastState = {
+type ToastProps = {
   idx?: string
   message: string | JSX.Element
   duration?: number
   type: AlertColor
 }
-export type ToastParams = ToastState
 
 let timeouts: Record<string, number> = {}
 const ref = createRef<any>()
 
-export const toast = (props: ToastParams) => ref.current.open(props)
+export const toast = (props: ToastProps) => ref.current.open(props)
 
 const ToastContainer: VFC = () => {
-  const [alerts, setAlerts] = useState<ToastState[]>([])
+  const [alerts, setAlerts] = useState<ToastProps[]>([])
 
   const onClose = (idx: string) => {
     setAlerts((alerts) => alerts.filter((alert) => alert.idx !== idx))
   }
 
-  const onAdd = (params: ToastParams): void => {
+  const onAdd = (params: ToastProps): void => {
     const idx = params?.idx || `${Math.random() + Date.now()}`
     clearTimeout(timeouts[idx])
     if (params?.idx) onClose(idx)
     setAlerts((alerts) => [...alerts, { ...params, idx }])
     timeouts[idx] = window.setTimeout(
       () => onClose(idx),
-      params?.duration || 5000
+      params?.duration || 2500
     )
   }
 
@@ -41,7 +41,7 @@ const ToastContainer: VFC = () => {
   return (
     <Snackbar
       open={alerts.length > 0}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
     >
       <div>
         {alerts.map(({ idx, message, type }) => (

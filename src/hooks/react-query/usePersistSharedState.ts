@@ -22,7 +22,7 @@ const usePersistSharedState = <T = any>(
     },
     queryFn: () => Storage.get(key),
     keepPreviousData: true,
-    notifyOnChangeProps: [],
+    notifyOnChangeProps: ['data'],
     staleTime: Infinity,
     cacheTime: Infinity,
   })

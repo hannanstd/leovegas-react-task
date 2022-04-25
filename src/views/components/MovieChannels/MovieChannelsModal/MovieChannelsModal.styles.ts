@@ -32,6 +32,6 @@ const useStyles = makeStyles(
       marginLeft: spacing(1),
     },
   }),
-  { name: 'MovieChannels' }
+  { name: 'MovieChannelsModal' }
 )
 export default useStyles
