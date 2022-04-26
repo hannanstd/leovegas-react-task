@@ -23,7 +23,7 @@ const Home: VFC = () => {
         Welcome, Click on the button below to start.
       </Typography>
       <div className={classes.buttonContainer}>
-        <Link to="/search?q=matrix">
+        <Link to="/search?q=Matrix">
           <Button variant="contained">Search Movies</Button>
         </Link>
       </div>

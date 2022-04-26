@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import RouteSwitch from 'views/components/RouteSwitch'
 import ToastContainer from 'views/components/Toast'
+import ConfirmModalContainer from 'views/components/ConfirmModal'
 import Layout from 'views/layout'
 import routes from 'views/routes'
 import theme from 'theme'
@@ -24,6 +25,7 @@ const App: VFC = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <ToastContainer />
+      <ConfirmModalContainer />
       <Router>
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={false} />

@@ -11,6 +11,7 @@ import RenameIcon from '@mui/icons-material/DriveFileRenameOutline'
 import TextField from '@mui/material/TextField'
 import AddIcon from '@mui/icons-material/Add'
 import { toast } from 'views/components/Toast'
+import { confirm } from 'views/components/ConfirmModal'
 import { MovieIdType, MovieObjectType } from 'views/components/MoviesTable'
 import useStyles from './MovieChannelsModal.styles'
 import { useMovieChannelsHelpers } from '../hooks'
@@ -37,11 +38,11 @@ const MovieChannelsModal: VFC<MovieChannelsProps> = ({
     const toastIdx = `movie-channels-checkbox-change-${channelName}-${movieId}`
     if (checked) {
       methods.addMovieToChannels(movieObject, [channelName])
-      const message: string = `"${movieTitle}" added to "${channelName}"`
+      const message: string = `${movieTitle} added to ${channelName}`
       toast({ idx: toastIdx, type: 'success', message })
     } else {
       methods.removeMovieFromChannels(movieId, [channelName])
-      const message: string = `"${movieTitle}" removed from "${channelName}"`
+      const message: string = `${movieTitle} removed from ${channelName}`
       toast({ idx: toastIdx, type: 'warning', message })
     }
   }
@@ -51,15 +52,20 @@ const MovieChannelsModal: VFC<MovieChannelsProps> = ({
     setNewChannelName('')
     toast({
       type: 'success',
-      message: `"${movieTitle}" added to "${newChannelName}"`,
+      message: `${movieTitle} added to ${newChannelName}`,
     })
   }
 
   const onRemoveChannel = (channelName: string): void => {
-    //if (window.confirm('Are you sure you want to remove this channel?')) {
-    methods.removeChannel(channelName)
-    toast({ type: 'warning', message: `Channel "${channelName}" removed` })
-    //}
+    confirm({
+      type: 'error',
+      title: `Are you sure you want to remove ${channelName}?`,
+      confirmText: 'Yes, Remove',
+      onConfirm: () => {
+        methods.removeChannel(channelName)
+        toast({ type: 'warning', message: `Channel ${channelName} removed` })
+      },
+    })
   }
 
   return (

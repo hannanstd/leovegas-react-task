@@ -4,7 +4,6 @@ import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import { AlertColor } from '@mui/material/Alert/Alert'
 import Transition from '@mui/material/Fade'
-import { SnackbarOrigin } from '@mui/material/Snackbar/Snackbar'
 
 type ToastProps = {
   idx?: string
@@ -30,10 +29,7 @@ const ToastContainer: VFC = () => {
     clearTimeout(timeouts[idx])
     if (params?.idx) onClose(idx)
     setAlerts((alerts) => [...alerts, { ...params, idx }])
-    timeouts[idx] = window.setTimeout(
-      () => onClose(idx),
-      params?.duration || 2500
-    )
+    timeouts[idx] = window.setTimeout(onClose, params?.duration || 4000, idx)
   }
 
   useImperativeHandle(ref, () => ({ open: onAdd }), [])
