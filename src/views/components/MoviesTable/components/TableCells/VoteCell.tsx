@@ -1,8 +1,8 @@
-import { TableCellsProps } from '../../MoviesTable.types'
 import React, { VFC } from 'react'
 import Rating from '@mui/material/Rating'
+import { MoviesTableCellsProps } from '../../MoviesTable'
 
-export interface VoteCellProps extends TableCellsProps {}
+export interface VoteCellProps extends MoviesTableCellsProps {}
 const VoteCell: VFC<VoteCellProps> = ({ row }) => {
   return (
     <>

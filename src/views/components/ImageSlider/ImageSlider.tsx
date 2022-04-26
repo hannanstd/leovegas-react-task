@@ -12,14 +12,14 @@ import CloseIcon from '@mui/icons-material/Close'
 
 export interface ImageSliderProps {
   imageUrls: string[]
-  show: boolean
+  open: boolean
   onClose: () => void
   isLoading: boolean
 }
 
 const ImageSlider: VFC<ImageSliderProps> = ({
   imageUrls,
-  show = false,
+  open = false,
   onClose,
   isLoading = false,
 }) => {
@@ -29,7 +29,7 @@ const ImageSlider: VFC<ImageSliderProps> = ({
 
   return (
     <Dialog
-      open={show}
+      open={open}
       fullScreen
       onClose={() => onClose?.()}
       classes={{ root: classes.root, paper: classes.paperRoot }}

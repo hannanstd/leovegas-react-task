@@ -8,7 +8,7 @@ import TableCell from '@mui/material/TableCell'
 import TableBody from '@mui/material/TableBody'
 import TablePagination from '@mui/material/TablePagination'
 import Transition from '@mui/material/Fade'
-import { MovieIdType, MovieObjectType } from './MoviesTable.types'
+import { MovieIdType, MovieObjectType } from 'types/Movies.types'
 import useStyles from './MoviesTable.styles'
 import {
   MovieChannelsModal,
@@ -24,6 +24,10 @@ import ThumbnailCell from './components/TableCells/ThumbnailCell'
 import TitleCell from './components/TableCells/TitleCell'
 import VideoCell from './components/TableCells/VideoCell'
 import VoteCell from './components/TableCells/VoteCell'
+
+export interface MoviesTableCellsProps {
+  row: MovieObjectType
+}
 
 export interface MoviesTableProps {
   rows: Array<MovieObjectType>
@@ -164,6 +168,7 @@ const MoviesTable: VFC<MoviesTableProps> = ({
 
       {!!channelMovieObject && (
         <MovieChannelsModal
+          open={true}
           movieObject={channelMovieObject}
           onClose={() => setChannelMovieObject(null)}
         />

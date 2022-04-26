@@ -1,7 +1,7 @@
 import React, { VFC } from 'react'
-import { TableCellsProps } from '../../MoviesTable.types'
+import { MoviesTableCellsProps } from '../../MoviesTable'
 
-export interface DescriptionCellProps extends TableCellsProps {}
+export interface DescriptionCellProps extends MoviesTableCellsProps {}
 const DescriptionCell: VFC<DescriptionCellProps> = ({ row }) => {
   return (
     <div>

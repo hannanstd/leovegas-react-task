@@ -32,13 +32,13 @@ const MovieMedia: VFC<MovieMediaProps> = ({ movieId, type, onClose }) => {
     <>
       <FloatingVideoPlayer
         videoUrls={videoUrls ?? []}
-        show={isVideoEnabled}
+        open={isVideoEnabled}
         onClose={onClose}
         isLoading={isVideoLoading}
       />
       <ImageSlider
         imageUrls={imageUrls ?? []}
-        show={isImageEnabled}
+        open={isImageEnabled}
         onClose={onClose}
         isLoading={isImageLoading}
       />

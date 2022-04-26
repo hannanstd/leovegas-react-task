@@ -1,8 +1,8 @@
 import React, { VFC } from 'react'
-import { QuerySchemas } from 'schema/query.schema'
+import { MovieObjectType } from 'types/Movies.types'
 
 export type ListItemProps = Pick<
-  QuerySchemas['searchMovie']['output']['items'][0],
+  MovieObjectType,
   'thumbnail' | 'title' | 'year'
 > & { attributes: React.HTMLAttributes<HTMLLIElement> }
 

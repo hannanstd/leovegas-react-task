@@ -9,6 +9,11 @@ const useStyles = makeStyles(
     tabRoot: {
       textTransform: 'none !important' as any,
     },
+    fabRoot: {
+      position: 'fixed !important' as any,
+      right: 50,
+      bottom: 50,
+    },
     scrollButtons: {
       '&.Mui-disabled': {
         opacity: '0.3 !important',

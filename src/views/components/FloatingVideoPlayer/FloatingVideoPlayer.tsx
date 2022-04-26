@@ -10,14 +10,14 @@ import VideoPlayer from '../VideoPlayer'
 
 export interface FloatingVideoPlayerProps {
   videoUrls: string[]
-  show: boolean
+  open: boolean
   onClose: () => void
   isLoading: boolean
 }
 
 const FloatingVideoPlayer: VFC<FloatingVideoPlayerProps> = ({
   videoUrls,
-  show = false,
+  open = false,
   onClose,
   isLoading = false,
 }) => {
@@ -26,7 +26,7 @@ const FloatingVideoPlayer: VFC<FloatingVideoPlayerProps> = ({
   const [index, setIndex] = useState<number>(0)
   useEffect(() => setIndex(0), [videoUrls])
 
-  return show ? (
+  return open ? (
     <div className={classes.root}>
       <ButtonGroup variant="text" className={classes.topBar}>
         <IconButton

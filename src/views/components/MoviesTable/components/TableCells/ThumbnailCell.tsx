@@ -1,7 +1,8 @@
-import { MovieIdType, TableCellsProps } from '../../MoviesTable.types'
 import React, { VFC } from 'react'
+import { MovieIdType } from 'types/Movies.types'
+import { MoviesTableCellsProps } from '../../MoviesTable'
 
-export interface ThumbnailCellProps extends TableCellsProps {
+export interface ThumbnailCellProps extends MoviesTableCellsProps {
   onClick: (id: MovieIdType) => void
 }
 const ThumbnailCell: VFC<ThumbnailCellProps> = ({ onClick, row }) => {

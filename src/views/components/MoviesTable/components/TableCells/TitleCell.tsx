@@ -1,7 +1,7 @@
-import { TableCellsProps } from '../../MoviesTable.types'
 import React, { VFC } from 'react'
+import { MoviesTableCellsProps } from '../../MoviesTable'
 
-export interface TitleCellProps extends TableCellsProps {}
+export interface TitleCellProps extends MoviesTableCellsProps {}
 const TitleCell: VFC<TitleCellProps> = ({ row }) => {
   return (
     <>

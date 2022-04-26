@@ -1,9 +1,10 @@
-import { MovieIdType, TableCellsProps } from '../../MoviesTable.types'
 import React, { VFC } from 'react'
 import IconButton from '@mui/material/IconButton/IconButton'
 import VideoIcon from '@mui/icons-material/OndemandVideo'
+import { MovieIdType } from 'types/Movies.types'
+import { MoviesTableCellsProps } from '../../MoviesTable'
 
-export interface VideoCellProps extends TableCellsProps {
+export interface VideoCellProps extends MoviesTableCellsProps {
   onClick: (id: MovieIdType) => void
   disabled: boolean
 }

@@ -4,13 +4,15 @@ import { Theme } from '@mui/material'
 const useStyles = makeStyles(
   ({ palette: { common, mode, grey }, spacing }: Theme) => ({
     root: {
-      paddingBottom: `${spacing(3)} !important`,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: spacing(1),
+      '& > div': {
+        width: '100%',
+      },
     },
-    formGroupRoot: {
-      marginBottom: spacing(5),
-    },
-    footerRoot: {},
   }),
-  { name: 'MovieChannelsModal' }
+  { name: 'AddNewChannel' }
 )
 export default useStyles

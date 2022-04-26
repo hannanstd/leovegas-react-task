@@ -1,8 +1,3 @@
-import {
-  MovieIdType,
-  MovieObjectType,
-  TableCellsProps,
-} from '../../MoviesTable.types'
 import React, { VFC } from 'react'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Checkbox from '@mui/material/Checkbox/Checkbox'
@@ -11,8 +6,10 @@ import EditIcon from '@mui/icons-material/Edit'
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded'
 import ArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import ArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+import { MovieIdType, MovieObjectType } from 'types/Movies.types'
+import { MoviesTableCellsProps } from '../../MoviesTable'
 
-export interface ActionCellProps extends TableCellsProps {
+export interface ActionCellProps extends MoviesTableCellsProps {
   isCollapsed: boolean
   onCollapseChange: (id: MovieIdType, collapsed: boolean) => void
   onChannelClick: (row: MovieObjectType) => void
