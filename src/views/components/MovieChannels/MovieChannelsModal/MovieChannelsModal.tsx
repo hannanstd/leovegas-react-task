@@ -52,7 +52,7 @@ const MovieChannelsModal: VFC<MovieChannelsProps> = ({
   const onRemoveChannel = (channelName: string): void => {
     confirm({
       type: 'error',
-      title: `Are you sure you want to remove ${channelName}?`,
+      title: `Are you sure you want to remove channel ${channelName}?`,
       confirmText: 'Yes, Remove',
       onConfirm: () => {
         methods.removeChannel(channelName)

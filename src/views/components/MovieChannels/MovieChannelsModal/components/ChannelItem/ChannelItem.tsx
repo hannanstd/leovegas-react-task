@@ -53,11 +53,12 @@ const ChannelItem: VFC<ChannelItemProps> = ({
             </Typography>
           ) : (
             <TextField
-              autoFocus={true}
+              autoFocus
               size="small"
               classes={{ root: classes.inputRoot }}
               value={newChannelName}
               onChange={(e) => setNewChannelName(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && onRenameChannel().then()}
             />
           )
         }

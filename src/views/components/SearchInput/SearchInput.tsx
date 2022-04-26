@@ -3,17 +3,22 @@ import Autocomplete from '@mui/material/Autocomplete'
 import Paper from '@mui/material/Paper'
 import { useDebounce, useQuery } from 'hooks'
 import useStyles from './SearchInput.styles'
-import useSearchedValue from '../../hooks'
+import useSearchedValue from './hooks'
 import ListItem from './components/ListItem'
 import TextInput from './components/TextInput'
 import ViewResultLink from './components/ViewResultLink'
 
-const SearchInput: VFC = () => {
+export interface SearchInputProps {
+  defaultValue?: string
+}
+
+const SearchInput: VFC<SearchInputProps> = ({ defaultValue = '' }) => {
   const classes = useStyles()
   const [submittedValue, submitValue] = useSearchedValue()
+  defaultValue = submittedValue || defaultValue
 
-  const [inputValue, setInputValue] = useState<string>(submittedValue)
-  useEffect(() => setInputValue(submittedValue), [submittedValue])
+  const [inputValue, setInputValue] = useState<string>(defaultValue)
+  useEffect(() => setInputValue(defaultValue), [submittedValue, defaultValue])
 
   const debouncedInputValue: string = useDebounce(inputValue, 500)
   const { isLoading, data } = useQuery('searchMovie', {

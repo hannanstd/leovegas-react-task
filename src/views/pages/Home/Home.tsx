@@ -1,9 +1,8 @@
 import React, { VFC } from 'react'
-import Button from '@mui/material/Button'
 import config from 'App.config'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
-import { Link } from 'react-router-dom'
+import SearchInput from 'views/components/SearchInput'
 import useStyles from './Home.styles'
 
 const Home: VFC = () => {
@@ -12,10 +11,10 @@ const Home: VFC = () => {
     <Container maxWidth="sm">
       <Typography
         component="h1"
-        variant="h2"
+        variant="h1"
         align="center"
         color="text.primary"
-        gutterBottom
+        fontWeight="bold"
       >
         {config.APP_NAME}
       </Typography>
@@ -23,9 +22,7 @@ const Home: VFC = () => {
         Welcome, Click on the button below to start.
       </Typography>
       <div className={classes.buttonContainer}>
-        <Link to="/search?q=Matrix">
-          <Button variant="contained">Search Movies</Button>
-        </Link>
+        <SearchInput defaultValue="Matrix" />
       </div>
     </Container>
   )

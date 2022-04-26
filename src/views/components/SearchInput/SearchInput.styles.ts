@@ -11,6 +11,7 @@ const useStyles = makeStyles(
     formRoot: {
       width: '100%',
       maxWidth: 500,
+      marginRight: spacing(1.5),
     },
     autoCompleteRoot: {
       '& .MuiAutocomplete-popupIndicator svg': {

@@ -24,6 +24,7 @@ const AddChannel: VFC<AddChannelProps> = ({ ...props }) => {
     <form onSubmit={onSubmit}>
       <div className={classes.root}>
         <TextField
+          autoFocus
           size="small"
           label="Add New Channel"
           value={channelName}

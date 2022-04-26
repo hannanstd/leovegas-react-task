@@ -19,7 +19,7 @@ const useStyles = makeStyles<any, any>(
     },
     inputRoot: {
       '& input': {
-        padding: spacing(1.5, 2, 1),
+        padding: spacing(1, 2, 1),
       },
     },
     moviesCount: {

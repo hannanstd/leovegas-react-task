@@ -8,7 +8,7 @@ import RouteSwitch from 'views/components/RouteSwitch'
 import ToastContainer from 'views/components/Toast'
 import ConfirmModalContainer from 'views/components/ConfirmModal'
 import Layout from 'views/layout'
-import routes from 'views/routes'
+import routes from 'routes'
 import theme from 'theme'
 
 const queryClient: QueryClient = new QueryClient({

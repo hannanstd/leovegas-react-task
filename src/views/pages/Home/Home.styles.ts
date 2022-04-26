@@ -8,6 +8,9 @@ const useStyles = makeStyles(
       width: '100%',
       display: 'flex',
       justifyContent: 'center',
+      '& a': {
+        textDecoration: 'none !important',
+      },
     },
   }),
   { name: 'Home' }

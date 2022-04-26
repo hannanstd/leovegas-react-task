@@ -22,7 +22,7 @@ import ActionCell from './components/TableCells/ActionCell'
 import DescriptionCell from './components/TableCells/DescriptionCell'
 import ThumbnailCell from './components/TableCells/ThumbnailCell'
 import TitleCell from './components/TableCells/TitleCell'
-import VideoCell from './components/TableCells/VideoCell'
+import MediaCell from './components/TableCells/MediaCell'
 import VoteCell from './components/TableCells/VoteCell'
 
 export interface MoviesTableCellsProps {
@@ -64,7 +64,7 @@ const MoviesTable: VFC<MoviesTableProps> = ({
   const onVideoClick = (movieId: MovieIdType): void =>
     setMediaState({ type: MovieMediaEnum.Video, movieId })
 
-  const onThumbnailClick = (movieId: MovieIdType): void =>
+  const onImageClick = (movieId: MovieIdType): void =>
     setMediaState({ type: MovieMediaEnum.Image, movieId })
 
   const onCollapseChange = (movieId: MovieIdType, isCollapsed: boolean) => {
@@ -84,7 +84,7 @@ const MoviesTable: VFC<MoviesTableProps> = ({
               <TableCell align="center">Images</TableCell>
               <TableCell>Title</TableCell>
               <TableCell>Votes</TableCell>
-              <TableCell>Videos</TableCell>
+              <TableCell>Media</TableCell>
               <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -102,7 +102,7 @@ const MoviesTable: VFC<MoviesTableProps> = ({
                 <Fragment key={row.id}>
                   <TableRow className={classes.tableRow}>
                     <TableCell align="center" className={classes.thumbnailCell}>
-                      <ThumbnailCell row={row} onClick={onThumbnailClick} />
+                      <ThumbnailCell row={row} onClick={onImageClick} />
                     </TableCell>
 
                     <TableCell>
@@ -114,10 +114,11 @@ const MoviesTable: VFC<MoviesTableProps> = ({
                     </TableCell>
 
                     <TableCell>
-                      <VideoCell
+                      <MediaCell
                         row={row}
-                        onClick={onVideoClick}
-                        disabled={row.id === mediaState?.movieId}
+                        onVideoClick={onVideoClick}
+                        onImageClick={onImageClick}
+                        videoDisabled={row.id === mediaState?.movieId}
                       />
                     </TableCell>
 

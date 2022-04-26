@@ -1,2 +1,2 @@
 export { default } from './Header'
-export { HeaderPortalConsumer } from './HeaderPortal'
+export { HeaderPortalConsumer } from './components/HeaderPortal'

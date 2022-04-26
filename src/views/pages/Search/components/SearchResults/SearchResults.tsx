@@ -4,7 +4,7 @@ import Backdrop from '@mui/material/Backdrop'
 import Loading from 'views/components/Loading'
 import MoviesTable from 'views/components/MoviesTable'
 import useStyles from './SearchResults.styles'
-import useSearchedValue from '../../hooks'
+import { useSearchedValue } from 'views/components/SearchInput'
 
 const SearchResults: VFC = () => {
   const classes = useStyles()
