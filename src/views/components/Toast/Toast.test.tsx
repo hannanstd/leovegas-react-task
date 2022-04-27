@@ -1,9 +1,8 @@
 import { act, render, RenderResult } from '@testing-library/react'
 import ToastContainer, { toast } from './Toast'
+import { randomString } from '__test__'
 
 let documentBody: RenderResult
-
-const randomString: string = (Math.random() + 1).toString(36).substring(7)
 
 describe('testing Toast', (): void => {
   beforeEach(() => {
@@ -22,7 +21,7 @@ describe('testing Toast', (): void => {
 
   it('to have entered message', (): void => {
     const { getByTestId } = documentBody
-    const message: string = randomString
+    const message: string = randomString()
     const idx: string = 'idx-' + Date.now()
 
     act(() => toast({ idx, type: 'success', message }))
@@ -32,7 +31,7 @@ describe('testing Toast', (): void => {
 
   it('to have multiple alert', (): void => {
     const { getAllByTestId } = documentBody
-    const message: string = randomString
+    const message: string = randomString()
     const length: number = 3
     act(() => {
       for (let i: number = 0; i < length; i++) {
@@ -47,7 +46,7 @@ describe('testing Toast', (): void => {
 
     const { queryByTestId } = documentBody
     const timeout: number = 5000
-    const message: string = randomString
+    const message: string = randomString()
     const idx: string = 'idx-' + Date.now()
 
     expect(queryByTestId(`alert-${idx}`)).not.toBeInTheDocument()

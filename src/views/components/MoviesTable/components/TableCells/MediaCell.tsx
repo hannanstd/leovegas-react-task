@@ -1,5 +1,5 @@
 import React, { VFC } from 'react'
-import IconButton from '@mui/material/IconButton/IconButton'
+import IconButton from '@mui/material/IconButton'
 import VideoIcon from '@mui/icons-material/OndemandVideo'
 import ImageIcon from '@mui/icons-material/PhotoSizeSelectActualOutlined'
 import { MovieIdType } from 'types/Movies.types'

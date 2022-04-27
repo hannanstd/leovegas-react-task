@@ -15,10 +15,14 @@ import TextInput from './components/TextInput'
 import ViewResultLink from './components/ViewResultLink'
 
 export interface SearchInputProps {
+  placeholder?: string
   defaultValue?: string
 }
 
-const SearchInput: VFC<SearchInputProps> = ({ defaultValue = '' }) => {
+const SearchInput: VFC<SearchInputProps> = ({
+  defaultValue = '',
+  placeholder,
+}) => {
   const classes = useStyles()
   const [submittedValue, submitValue] = useSearchedValue()
   defaultValue = submittedValue || defaultValue
@@ -73,6 +77,7 @@ const SearchInput: VFC<SearchInputProps> = ({ defaultValue = '' }) => {
           )}
           renderInput={(props) => (
             <TextInput
+              placeholder={placeholder}
               isLoading={isLoading}
               isSubmittable={isSubmittable}
               {...props}

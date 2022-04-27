@@ -6,11 +6,9 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react'
 import ConfirmModalContainer, { confirm } from './ConfirmModal'
-import provideTheme from '__test__/provideTheme'
+import { provideTheme, randomString } from '__test__'
 
 let documentBody: RenderResult
-
-const randomString: string = (Math.random() + 1).toString(36).substring(7)
 
 describe('testing ConfirmModal', (): void => {
   beforeEach(() => {
@@ -29,7 +27,7 @@ describe('testing ConfirmModal', (): void => {
 
   it('to have entered title', (): void => {
     const { getByTestId } = documentBody
-    const title: string = randomString
+    const title: string = randomString()
 
     act(() => confirm({ title, onConfirm: () => {} }))
 
@@ -38,7 +36,7 @@ describe('testing ConfirmModal', (): void => {
 
   it('to have entered message', (): void => {
     const { getByTestId } = documentBody
-    const message: string = randomString
+    const message: string = randomString()
 
     act(() => confirm({ message, onConfirm: () => {} }))
 
@@ -47,7 +45,7 @@ describe('testing ConfirmModal', (): void => {
 
   it('to have entered confirm text', (): void => {
     const { getByTestId } = documentBody
-    const confirmText: string = randomString
+    const confirmText: string = randomString()
 
     act(() => confirm({ confirmText, onConfirm: () => {} }))
 
@@ -56,7 +54,7 @@ describe('testing ConfirmModal', (): void => {
 
   it('to have entered cancel text', (): void => {
     const { getByTestId } = documentBody
-    const cancelText: string = randomString
+    const cancelText: string = randomString()
 
     act(() => confirm({ cancelText, onConfirm: () => {} }))
 

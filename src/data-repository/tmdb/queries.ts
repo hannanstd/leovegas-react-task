@@ -50,13 +50,6 @@ const queries: QueryRequests = {
             `https://image.tmdb.org/t/p/original/${item?.file_path}`
         ),
   }),
-  MovieMedia: (variables) => ({
-    endpoint: `movie/${variables.id}`,
-    resolver: (data) => ({
-      id: data.id,
-      title: data.title,
-    }),
-  }),
 }
 
 export default queries

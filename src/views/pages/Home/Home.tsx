@@ -19,10 +19,10 @@ const Home: VFC = () => {
         {config.APP_NAME}
       </Typography>
       <Typography variant="h5" align="center" color="text.secondary" paragraph>
-        Welcome, Click on the button below to start.
+        Welcome, Search your movie to start.
       </Typography>
       <div className={classes.buttonContainer}>
-        <SearchInput defaultValue="Matrix" />
+        <SearchInput placeholder="For Example: Matrix" />
       </div>
     </Container>
   )

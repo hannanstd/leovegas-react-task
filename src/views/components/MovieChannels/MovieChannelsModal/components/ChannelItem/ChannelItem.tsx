@@ -1,7 +1,7 @@
 import React, { useEffect, useState, VFC } from 'react'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import ButtonGroup from '@mui/material/ButtonGroup'
-import IconButton from '@mui/material/IconButton/IconButton'
+import IconButton from '@mui/material/IconButton'
 import RenameIcon from '@mui/icons-material/DriveFileRenameOutline'
 import SaveAsIcon from '@mui/icons-material/SaveAs'
 import DeleteIcon from '@mui/icons-material/Delete'

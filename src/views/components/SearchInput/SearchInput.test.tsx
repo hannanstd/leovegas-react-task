@@ -2,7 +2,7 @@ import { act, fireEvent, render } from '@testing-library/react'
 import SearchInput from './SearchInput'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { useQuery } from 'hooks'
-import provideTheme from '__test__/provideTheme'
+import { provideTheme } from '__test__'
 
 jest.mock('hooks')
 

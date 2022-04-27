@@ -13,14 +13,14 @@ const SearchResults: VFC = () => {
   const [page, setPage] = useState<number>(1)
   useEffect(() => setPage(1), [searchText])
 
-  const { data, isLoading } = useQuery('searchMovie', {
+  const { data, isLoading, isFetching } = useQuery('searchMovie', {
     variables: { searchText, page },
     options: { enabled: !!searchText, keepPreviousData: !!searchText },
   })
 
   return (
     <div className={classes.root}>
-      <Backdrop open={isLoading}>
+      <Backdrop open={isLoading || isFetching}>
         <Loading />
       </Backdrop>
       <MoviesTable

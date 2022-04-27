@@ -96,20 +96,27 @@ const MoviesTable: VFC<MoviesTableProps> = ({
               </TableRow>
             )}
 
-            {rows?.map?.((row) => {
+            {rows?.map?.((row, index) => {
               const isCollapsed: boolean = collapsedIds.includes(row.id)
               return (
                 <Fragment key={row.id}>
-                  <TableRow className={classes.tableRow}>
-                    <TableCell align="center" className={classes.thumbnailCell}>
+                  <TableRow
+                    className={classes.tableRow}
+                    data-testid="table-row"
+                  >
+                    <TableCell
+                      align="center"
+                      data-testid={`cell-thumbnail-${index}`}
+                      className={classes.thumbnailCell}
+                    >
                       <ThumbnailCell row={row} onClick={onImageClick} />
                     </TableCell>
 
-                    <TableCell>
+                    <TableCell data-testid={`cell-title-${index}`}>
                       <TitleCell row={row} />
                     </TableCell>
 
-                    <TableCell>
+                    <TableCell data-testid={`cell-vote-${index}`}>
                       <VoteCell row={row} />
                     </TableCell>
 
@@ -137,7 +144,7 @@ const MoviesTable: VFC<MoviesTableProps> = ({
                   <TableRow>
                     <TableCell className={classes.hiddenCell} colSpan={5}>
                       <Transition in={isCollapsed} unmountOnExit>
-                        <div>
+                        <div data-testid={`cell-description-${index}`}>
                           <DescriptionCell row={row} />
                         </div>
                       </Transition>
@@ -154,7 +161,10 @@ const MoviesTable: VFC<MoviesTableProps> = ({
         <TablePagination
           count={totalCount || 0}
           page={page - 1}
-          onPageChange={(_, page) => onPageChange(page + 1)}
+          onPageChange={(_, page) => {
+            onPageChange(page + 1)
+            // window.scrollTo({ top: 0, behavior: 'smooth' })
+          }}
           rowsPerPage={perPage || 20}
           rowsPerPageOptions={[]}
           component="div"

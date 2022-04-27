@@ -1,6 +1,6 @@
 import React, { VFC } from 'react'
 import ButtonGroup from '@mui/material/ButtonGroup'
-import Checkbox from '@mui/material/Checkbox/Checkbox'
+import Checkbox from '@mui/material/Checkbox'
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'
 import EditIcon from '@mui/icons-material/Edit'
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded'

@@ -10,19 +10,21 @@ import { AutocompleteRenderInputParams } from '@mui/material/Autocomplete'
 export interface TextInputProps extends AutocompleteRenderInputParams {
   isLoading: boolean
   isSubmittable: boolean
+  placeholder?: string
 }
 
 const TextInput: VFC<TextInputProps> = ({
   isLoading,
   isSubmittable,
+  placeholder = 'Search Movie',
   ...props
 }) => {
   return (
     <TextField
       {...props}
+      placeholder={placeholder}
       autoFocus
       data-testid="search-input"
-      placeholder="Search Movie"
       variant="outlined"
       size="small"
       InputProps={{

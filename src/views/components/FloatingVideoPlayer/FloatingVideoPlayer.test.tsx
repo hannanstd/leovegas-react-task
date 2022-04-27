@@ -1,6 +1,6 @@
 import { act, fireEvent, render } from '@testing-library/react'
 import FloatingVideoPlayer from './FloatingVideoPlayer'
-import provideTheme from '__test__/provideTheme'
+import { provideTheme, randomNumber } from '__test__'
 
 describe('testing FloatingVideoPlayer', (): void => {
   it('to be empty if open=false', (): void => {
@@ -54,7 +54,7 @@ describe('testing FloatingVideoPlayer', (): void => {
   })
 
   it('to have pagination', async (): Promise<void> => {
-    const length: number = Math.floor(Math.random() * (100 - 1)) + 1
+    const length: number = randomNumber(100)
     const videoUrls: string[] = Array.from(
       { length },
       (_) => `https://test.video`
