@@ -14,7 +14,7 @@ export interface ImageSliderProps {
   imageUrls: string[]
   open: boolean
   onClose: () => void
-  isLoading: boolean
+  isLoading?: boolean
 }
 
 const ImageSlider: VFC<ImageSliderProps> = ({

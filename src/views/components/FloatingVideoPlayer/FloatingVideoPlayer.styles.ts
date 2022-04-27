@@ -32,6 +32,10 @@ const useStyles = (props: any) =>
           bottom: 0,
         },
       },
+      playerRoot: {
+        flex: 1,
+        width: '100%',
+      },
       topBar: {
         position: 'absolute',
         top: 0,
