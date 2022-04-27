@@ -4,10 +4,10 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import Loading from 'views/components/Loading'
-import Pagination from '@mui/material/Pagination/Pagination'
+import Pagination from '@mui/material/Pagination'
 import PaginationItem from '@mui/material/PaginationItem'
 import useStyles from './ImageSlider.styles'
-import IconButton from '@mui/material/IconButton/IconButton'
+import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 
 export interface ImageSliderProps {
@@ -29,13 +29,19 @@ const ImageSlider: VFC<ImageSliderProps> = ({
 
   return (
     <Dialog
+      data-testid="container"
       open={open}
       fullScreen
       onClose={() => onClose?.()}
       classes={{ root: classes.root, paper: classes.paperRoot }}
     >
       <DialogTitle className={classes.headerRoot}>
-        <IconButton size="small" color="primary" onClick={() => onClose?.()}>
+        <IconButton
+          size="small"
+          color="primary"
+          data-testid="close-button"
+          onClick={() => onClose?.()}
+        >
           <CloseIcon />
         </IconButton>
       </DialogTitle>
@@ -46,13 +52,14 @@ const ImageSlider: VFC<ImageSliderProps> = ({
         ) : !imageUrls?.length ? (
           <div>No Images found</div>
         ) : (
-          <img src={imageUrls?.[index]} alt="" />
+          <img data-testid="image-container" src={imageUrls?.[index]} alt="" />
         )}
       </DialogContent>
 
       {!!imageUrls?.length && (
         <DialogActions className={classes.footerRoot}>
           <Pagination
+            data-testid="pagination-container"
             size="small"
             count={imageUrls?.length || 0}
             page={index + 1}
