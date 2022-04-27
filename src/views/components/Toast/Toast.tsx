@@ -39,10 +39,11 @@ const ToastContainer: VFC = () => {
       open={alerts.length > 0}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
     >
-      <div>
+      <div data-testid="container">
         {alerts.map(({ idx, message, type }) => (
           <Transition key={idx} in={true}>
             <Alert
+              data-testid={`alert-${idx}`}
               onClose={() => onClose(idx as string)}
               severity={type}
               elevation={6}

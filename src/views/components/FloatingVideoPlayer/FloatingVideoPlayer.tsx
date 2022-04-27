@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState, VFC } from 'react'
+import React, { useEffect, useState, VFC } from 'react'
 import useStyles from './FloatingVideoPlayer.styles'
 import Pagination from '@mui/material/Pagination'
 import Loading from 'views/components/Loading'
