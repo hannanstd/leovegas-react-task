@@ -12,7 +12,7 @@ const VideoPlayer: VFC<VideoPlayerProps> = ({
   height = '100%',
 }) => (
   <>
-    {url.includes('youtube') ? (
+    {url.includes('youtube.com') ? (
       <iframe
         width={width}
         height={height}
