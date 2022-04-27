@@ -1,4 +1,10 @@
-import React, { FormEvent, useEffect, useState, VFC } from 'react'
+import React, {
+  FormEvent,
+  HTMLAttributes,
+  useEffect,
+  useState,
+  VFC,
+} from 'react'
 import Autocomplete from '@mui/material/Autocomplete'
 import Paper from '@mui/material/Paper'
 import { useDebounce, useQuery } from 'hooks'
@@ -38,6 +44,12 @@ const SearchInput: VFC<SearchInputProps> = ({ defaultValue = '' }) => {
         }}
       >
         <Autocomplete
+          data-testid="autocomplete"
+          ListboxProps={
+            {
+              'data-testid': 'list-container',
+            } as HTMLAttributes<HTMLUListElement>
+          }
           key={submittedValue}
           options={data?.items || []}
           isOptionEqualToValue={(option) => option?.title === inputValue}

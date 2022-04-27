@@ -1,11 +1,11 @@
 import React, { VFC } from 'react'
-import CircularProgress from '@mui/material/CircularProgress/CircularProgress'
+import CircularProgress from '@mui/material/CircularProgress'
 import InputAdornment from '@mui/material/InputAdornment'
-import IconButton from '@mui/material/IconButton/IconButton'
+import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import LeftSideIcon from '@mui/icons-material/MovieFilter'
 import TextField from '@mui/material/TextField'
-import { AutocompleteRenderInputParams } from '@mui/material/Autocomplete/Autocomplete'
+import { AutocompleteRenderInputParams } from '@mui/material/Autocomplete'
 
 export interface TextInputProps extends AutocompleteRenderInputParams {
   isLoading: boolean
@@ -21,6 +21,7 @@ const TextInput: VFC<TextInputProps> = ({
     <TextField
       {...props}
       autoFocus
+      data-testid="search-input"
       placeholder="Search Movie"
       variant="outlined"
       size="small"

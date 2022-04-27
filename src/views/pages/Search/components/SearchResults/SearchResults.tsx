@@ -15,7 +15,7 @@ const SearchResults: VFC = () => {
 
   const { data, isLoading } = useQuery('searchMovie', {
     variables: { searchText, page },
-    options: { enabled: !!searchText, keepPreviousData: true },
+    options: { enabled: !!searchText, keepPreviousData: !!searchText },
   })
 
   return (

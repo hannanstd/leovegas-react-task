@@ -13,7 +13,7 @@ const ListItem: VFC<ListItemProps> = ({
   attributes,
 }) => {
   return (
-    <li {...attributes}>
+    <li {...attributes} data-testid="list-item">
       {thumbnail && (
         <img src={thumbnail} alt="" width={50} style={{ marginRight: 15 }} />
       )}
