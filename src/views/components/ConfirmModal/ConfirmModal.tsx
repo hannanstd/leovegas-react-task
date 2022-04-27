@@ -57,11 +57,12 @@ const ConfirmModalContainer: VFC = () => {
   useImperativeHandle(ref, () => ({ open }), [])
 
   return (
-    <Dialog open={state.open}>
+    <Dialog data-testid="container" open={state.open}>
       {(!!state?.title || !!state.type) && (
         <DialogTitle className={classes.dialogTitle}>
           {!!state?.type && (
             <Alert
+              data-testid="icon"
               severity={state.type}
               classes={{
                 root: classes.alertRoot,
@@ -69,20 +70,27 @@ const ConfirmModalContainer: VFC = () => {
               }}
             />
           )}
-          {!!state?.title && <Typography>{state?.title || ''}</Typography>}
+          {!!state?.title && (
+            <Typography data-testid="title-text">
+              {state?.title || ''}
+            </Typography>
+          )}
         </DialogTitle>
       )}
 
       {!!state?.message && (
-        <DialogContent>
+        <DialogContent data-testid="message-text">
           <DialogContentText>{state.message}</DialogContentText>
         </DialogContent>
       )}
       <DialogActions>
         {state.cancelText !== null && (
-          <Button onClick={onCancelClick}>{state.cancelText || 'No'}</Button>
+          <Button data-testid="cancel-button" onClick={onCancelClick}>
+            {state.cancelText || 'No'}
+          </Button>
         )}
         <Button
+          data-testid="confirm-button"
           onClick={onConfirmClick}
           autoFocus
           variant="contained"
